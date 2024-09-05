@@ -70,8 +70,21 @@ class Enlace:
                 continue
 
             # Tratar as sequências de escape
-            quadro = quadro.replace(b'\xDB\xDC', b'\xC0').replace(b'\xDB\xDD', b'\xDB')
+            try:
+                quadro = quadro.replace(b'\xDB\xDC', b'\xC0').replace(b'\xDB\xDD', b'\xDB')
+            except Exception as e:
+                # Ignora quadro malformado e limpa o buffer
+                self.buffer = b''
+                return
 
-            # Chama o callback com o datagrama completo
-            if self.callback:
-                self.callback(quadro)
+            # Chama o callback com o datagrama completo e trata excesões
+            try:
+                if self.callback:
+                    self.callback(quadro)
+            except Exception as e:
+                # Ignora a excesão, mas exibe o rastreamento de erro para depuração
+                import traceback
+                traceback.print_exc()
+                # Limpa o buffer residual
+                self.buffer = b''
+                return
