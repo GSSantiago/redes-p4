@@ -24,7 +24,7 @@ Complete sua implementação do passo anterior para lidar com as sequências de 
 
 Para receber dados no SLIP, você vai enfrentar um problema muito similar ao que enfrentou no servidor de bate-papo do Trabalho 1. Os bytes podem ser recebidos pelo sistema operacional na outra ponta da linha serial de uma forma bastante imprevisível. Pode ser que você receba só um byte por vez, ou pode ser que receba vários de uma vez mas não chegue um quadro inteiro de uma vez só, ou pode acontecer até mesmo de receber o final de um quadro junto com o começo do próximo.
 
-Implemente o método `__raw_recv` da classe `Enlace`. Ao receber um quadro completo, extraia o datagrama e chame `self.callback`, passando-o como argumento.
+Implemente o método `__raw_recv` da classe `Enlace`. Ao receber um quadro completo, extraia o datagrama e chame `self.callback`, passando-o como argumento..
 
 Além de tomar cuidado com os quadros que podem chegar *quebrados* em pedaços, siga a recomendação da RFC de **não** repassar à camada superior datagramas vazios. Eles ocorrem com muita frequência devido ao byte `0xC0` ser colocado no início e no fim do quadro. Descarte-os para melhorar a eficiência da implementação.
 
